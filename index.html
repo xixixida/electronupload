@@ -1,0 +1,151 @@
+<!-- 
+    version 1.0.0
+    time 20180608
+ -->
+ <!DOCTYPE html>
+ <html lang="zh">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <title>MakeCode_北京哈工科教机器人科技有限公司_V1.0.0</title>
+     <link rel="icon" type="image/png" href="./resources/apple-touch-icon.png">
+     <link href="./PythonEditor/static/css/bootstrap.min.css" rel="stylesheet">
+ </head>
+ <style>
+     html,
+     body,
+     webview {
+         height: 100%;
+         width: 100%;
+     }
+ 
+     * {
+         margin: 0;
+         padding: 0;
+     }
+ 
+     #header {
+         height: 4.5rem !important;
+         min-height: 4.5rem !important;
+         background: #3454d1;
+     }
+ 
+     @media only screen and (max-width: 991px) {
+         #taobao {
+             height: 3.5rem !important;
+             min-height: 3.5rem !important;
+             display: block;
+         }
+         #header {
+             height: 3.5rem !important;
+             min-height: 3.5rem !important;
+         }
+     }
+ 
+     #taobao {
+         height: 4.5rem !important;
+         min-height: 4.5rem !important;
+         display: block;
+     }
+ 
+     #taobao span {
+         background: rgba(0, 0, 0, 0);
+         color: #ffffff;
+ 
+     }
+ 
+     .btncolor {
+         background: hsla(0, 0%, 100%, .15);
+         width: 145px;
+         margin-top: 5px;
+     }
+ 
+     .btncolor:hover {
+         background: hsla(0, 0%, 100%, .7);
+     }
+ 
+     .img {
+         max-width: 146px;
+     }
+ </style>
+ 
+ <body>
+     <div id='header' class="container-fluid">
+         <div class="row">
+             <div class="col-sm-4">
+                 <img src="./resources/logo.png" class="img" onclick="guanwang()">
+             </div>
+             <div class="col-sm-4 text-center">
+                 <span onclick="python(this)" class="btn btncolor">Python</span>
+ 
+             </div>
+             <div class="col-sm-4 text-right" style="margin-top: 5px;">
+                 <button type="button" title="microbit Python 环境 只有下载Python 生成的二进制文件才能使用" class="btn btn-default" onclick="openHterm()">DPython</button>
+                 <span onclick="taobao()" class="btn btn-default glyphicon glyphicon-shopping-cart"></span>
+                 <button type="button" title="点击可后退" class="btn btn-default  glyphicon glyphicon-chevron-left" onclick="window.history.go(-1)"></button>
+                 <button type="button" title="点击可前进" class="btn btn-default glyphicon glyphicon-chevron-right" onclick="window.history.go(0)"></button>
+             </div>
+         </div>
+     </div>
+ 
+     <webview id="foo" allowpopups style="display: flex;"></webview>
+     <webview id="pythonEditor" src="./PythonEditor/editor.html" style="display: none;"></webview>
+ </body>
+ <script>
+     const {
+         shell,
+         ipcRenderer
+     } = require('electron')
+ 
+     function taobao() {
+         shell.openExternal('https://shop253940311.taobao.com/index.htm')
+     }
+     let display = 'none'
+ 
+     const foo = document.getElementById("foo");
+     const url = `https://makecode.microbit.org`
+     foo.src = url
+ 
+     function changeDivHeight() {
+         let height = window.innerHeight
+         let headerHeught = document.getElementById('header').offsetHeight
+         document.getElementById('foo').style.height = height - headerHeught + 'px'
+         document.getElementById('pythonEditor').style.height = height - headerHeught + 'px'
+ 
+     }
+     window.onload = function () {
+         changeDivHeight()
+     }
+ 
+     window.onresize = function () {
+         changeDivHeight()
+     }
+ 
+     function python(e) {
+         if (display === 'none') {
+             document.getElementById('foo').style.display = 'none'
+             document.getElementById('pythonEditor').style.display = 'flex'
+             display = 'flex'
+             e.innerText = 'Blockly'
+             document.getElementById('header').style.backgroundColor = '#336699'
+         } else {
+             document.getElementById('pythonEditor').style.display = 'none'
+             document.getElementById('foo').style.display = 'flex'
+             display = 'none'
+             e.innerText = 'Python'
+             document.getElementById('header').style.backgroundColor = '#3454d1'
+         }
+     }
+ 
+     function guanwang() {
+         shell.openExternal('www.hterobot.com')
+     }
+     
+     function openHterm () {
+         ipcRenderer.send('openHterm-message', 'open')
+     }
+ </script>
+ 
+ </html>

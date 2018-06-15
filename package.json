@@ -1,0 +1,30 @@
+{
+    "name": "makecode",
+    "version": "1.0.0",
+    "description": "哈工科教逗包MicroPython",
+    "main": "main.js",
+    "homepage": "https://github.com/xixixida/electronupload.git",
+    "repository": { 
+        "type" : "git",        
+         "url" : "https://github.com/xixixida/electronupload.git"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "electron .",
+        "install": "electron-rebuild",
+        "build:win": "electron-builder --win"
+    },
+    "win": ["s3"],
+    "author": "西夏孤雁 <1102120090@qq.com>",
+    "license": "ISC",
+    "dependencies": {
+        "electron-log": "^2.2.14",
+        "electron-updater": "^2.21.10",
+        "serialport": "^6.2.0"
+    },
+    "devDependencies": {
+        "electron": "^2.0.2",
+        "electron-builder": "^20.15.1",
+        "electron-rebuild": "^1.7.3"
+    }
+}
